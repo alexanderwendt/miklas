@@ -1,0 +1,4 @@
+In order to build the game, you need to download the following files manually as they are not available through MAVEN
+
+JGameGrid.jar   http://www.aplu.ch/home/download/JGameGrid.zip
+mp3plugin.jar   http://www.oracle.com/technetwork/java/javase/download-137625.html

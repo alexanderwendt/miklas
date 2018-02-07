@@ -29,8 +29,7 @@ repositories {
 
 dependencies {
 	//JGameGrid game engine
-	compile files('../../libs/JGameGrid.jar')
-	compile files('../../libs/mp3plugin.jar')
+	compile files('../../libs/JGameGrid.jar')	//Download manually and put in libs
 	
 	//Logger
     compile 'org.slf4j:slf4j-api:1.7.25'
@@ -42,6 +41,8 @@ dependencies {
 	//Music and sounds
 	// https://mvnrepository.com/artifact/javax.media/jmf
 	compile group: 'javax.media', name: 'jmf', version: '2.1.1e'
+	//MP3codec
+	compile files('../../libs/mp3plugin.jar')	//Download manually and put in libs
 	
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     // api 'org.apache.commons:commons-math3:3.6.1'
