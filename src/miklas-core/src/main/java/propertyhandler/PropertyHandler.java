@@ -300,15 +300,21 @@ public class PropertyHandler
 		return bResult;
 	}
 	
-	public ArrayList<String> getStringFromList(String address, String splitChar) {
+	public ArrayList<String> getStringFromList(String address, String splitChar) throws Exception {
 		String oOptionString = address;
-		
-		String loadedOptions = this.ht.getProperty(oOptionString); 
 		ArrayList<String> oSplitStringAsArrayList = new ArrayList<String>();
-		if (loadedOptions.isEmpty()==false) {
-			String[] oSplitstring = loadedOptions.split(splitChar);
-			oSplitStringAsArrayList.addAll(Arrays.asList(oSplitstring));
+		
+		try {
+			String loadedOptions = this.ht.getProperty(oOptionString); 
+			
+			if (loadedOptions!=null && loadedOptions.isEmpty()==false) {
+				String[] oSplitstring = loadedOptions.split(splitChar);
+				oSplitStringAsArrayList.addAll(Arrays.asList(oSplitstring));
+			}
+		} catch (NullPointerException e) {
+			throw new Exception("Cannot find string for property=" + oOptionString);
 		}
+		
 		
 		return oSplitStringAsArrayList;
 	}

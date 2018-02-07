@@ -30,11 +30,14 @@ repositories {
 dependencies {
 	//JGameGrid game engine
 	compile files('../../libs/JGameGrid.jar')
+	compile files('../../libs/mp3plugin.jar')
 	
 	//Logger
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'ch.qos.logback:logback-core:1.2.3'											//Use logback for this driver
   	compile 'ch.qos.logback:logback-classic:1.2.3'
+  	compile 'org.codehaus.janino:janino:2.7.8'	//For Logback filters
+    compile 'org.codehaus.janino:commons-compiler:2.7.8'
 	
 	//Music and sounds
 	// https://mvnrepository.com/artifact/javax.media/jmf
