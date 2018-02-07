@@ -1,5 +1,8 @@
 package launcher;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.SwingUtilities;
 
 import org.slf4j.Logger;
@@ -68,6 +71,8 @@ public class Launcher {
 	    		//Visualization oVis = new Visualization();
 	    		vis.setGameEngine(gameEngine);
 	    		vis.init();
+	    		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	    		vis.setLocation(dim.width/2-vis.getSize().width/2, dim.height/2-vis.getSize().height/2);
 	    		vis.setVisible(true);
 	    	}
 	    });

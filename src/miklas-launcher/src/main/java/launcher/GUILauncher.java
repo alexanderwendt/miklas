@@ -5,7 +5,9 @@
 
 package launcher;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -82,6 +84,8 @@ public class GUILauncher extends JFrame implements ActionListener {
 		    		vis.setGameEngine(ge);
 		    		vis.setTitle(conf.getGameTitle());
 		    		vis.init();
+		    		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		    		vis.setLocation(dim.width/2-vis.getSize().width/2, dim.height/2-vis.getSize().height/2);
 		    		vis.setVisible(true);
 		    	}
 		    });
