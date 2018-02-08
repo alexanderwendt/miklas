@@ -220,7 +220,7 @@ event.ispulled.custom.executeaction=DISPLACE
 #event.reducehealth.condition.TRIGGERACTION.triggeraction=INIT
 #event.reducehealth.scorechange=-10
 #event.reducehealth.permanentgraphic=false
-#event.reducehealth.custom.healthchange=-1
+#event.reducehealth.custom.healthchange=-10
 #event.reducehealth.custom.healthchangename=SETHEALTH
 
 event.reducehealth.eventname=REDUCEHEALTH

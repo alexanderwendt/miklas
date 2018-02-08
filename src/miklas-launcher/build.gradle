@@ -11,8 +11,10 @@ apply plugin: 'java-library'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-sourceCompatibility = 1.8
-version = '1.0'
+group = 'miklas'
+sourceCompatibility = 1.8	//Java version
+targetCompatibility = 1.8
+version = '1.0.0'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -35,5 +37,22 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.+'
+}
+
+//Build jar
+jar {
+	//Generate a manifest file
+  	manifest { 
+	  	version = project.version.replace('-','.');		//Create a version in the manifest from the variable "version" of this file
+    	//symbolicName = bundleSymbolicName
+    	//name = "Miklas"
+    	
+    	attributes 'Main-Class': 'launcher.GUILauncher.java'
+  	}
+ }
+ 
+ task copyDependencies(type: Copy) {
+   from configurations.compile
+   into 'build/libs/libs'
 }
 

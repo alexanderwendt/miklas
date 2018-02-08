@@ -21,3 +21,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /log
+/src/miklas-core/*.project
+/src/miklas-core/gradlew
+/src/miklas-core/gradlew.bat
+/src/miklas-core/.settings
+/src/miklas-launcher/gradlew.bat
+/src/miklas-launcher/.settings
+/src/miklas-launcher/gradle
+/src/miklas-launcher/.classpath
+/src/miklas-launcher/.project
+/src/miklas-launcher/gradlew

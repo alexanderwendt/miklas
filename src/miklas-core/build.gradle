@@ -56,7 +56,7 @@ dependencies {
 
 test {
     //systemProperties 'property': 'value'
-    exclude 'at/tuwien/ict/**'
+    //exclude 'at/tuwien/ict/**'
 }
 
 //Build jar
@@ -70,6 +70,12 @@ jar {
     	//attributes 'Main-Class': 'at.tuwien.ict.kore.core.launcher.KoreLauncher.java'
   	}
  }
+ 
+// jar {
+//  	into('lib') {
+//  		from configurations.compile
+//  	}
+// }
  
  task copyDependencies(type: Copy) {
    from configurations.compile
