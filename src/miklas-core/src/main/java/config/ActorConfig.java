@@ -10,10 +10,25 @@ import java.util.HashMap;
  */
 public class ActorConfig {
 
+	/**
+	 * Actor name
+	 */
 	private final String moActorName;
+	/**
+	 * Icon graphic path
+	 */
 	private final String moIconGraphicAddress;
+	/**
+	 * Rotate graphic with direction
+	 */
 	private final boolean mbRotateGraphicWithDirection;
+	/**
+	 * Initial rotation of the graphic
+	 */
 	private final double initRotation;
+	/**
+	 * 
+	 */
 	private final boolean mbUseMultipleGraphicIcons;
 	private final int numberOfGraphicIconsUsedForInterval;
 	private final int totalNumberOfIcons;
@@ -35,13 +50,13 @@ public class ActorConfig {
 		this.mbRotateGraphicWithDirection = mbRotateGraphicWithDirection;
 		this.initRotation = initRotation;
 		this.totalNumberOfIcons = totalNumberOfIcons;
-		if (numberOfGraphicIconsUsedForInterval>1) {
+		this.numberOfGraphicIconsUsedForInterval = numberOfGraphicIconsUsedForInterval;
+		if (this.numberOfGraphicIconsUsedForInterval>1) {
 			this.mbUseMultipleGraphicIcons = true;
 		} else {
-			this.mbUseMultipleGraphicIcons = true;
+			this.mbUseMultipleGraphicIcons = false;
 		}
 		
-		this.numberOfGraphicIconsUsedForInterval = numberOfGraphicIconsUsedForInterval;
 		this.mnGraphicStep = mnGraphicStep;
 		this.worldMapChar = worldMapChar;
 		this.evaluateActor = evaluateActor;

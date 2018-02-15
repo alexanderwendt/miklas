@@ -36,6 +36,7 @@ public class GameEngineImpl implements GameEngine {
 	//GGBackground moBackGround;
 	
 	public GameEngineImpl() {
+		Thread.currentThread().setName("GameEngine");
 		gameGrid = new GameGrid(true);
 	}
 

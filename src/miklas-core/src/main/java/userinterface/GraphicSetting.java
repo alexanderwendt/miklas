@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import entity.EntityInterface;
-import gameengine.GameEngineImpl;
 
 public class GraphicSetting {
 	
@@ -42,6 +41,7 @@ public class GraphicSetting {
 	
 	private void updateIcon() {
 		log.trace("Current graphic {}", currentUsedGraphicNumber);
+		//If any rotation shall take place, then this number must be >1
 		if (this.numberOfIconsContinousLoop>1) {
 			
 			if (intervalLockCount<=0) {
@@ -61,6 +61,7 @@ public class GraphicSetting {
 				//intervalLockCount--;
 			}
 		} else {
+			intervalLockCount--;
 			this.entity.showIcon(currentUsedGraphicNumber);
 		}
 	}
@@ -75,7 +76,7 @@ public class GraphicSetting {
 
 			log.debug("Event graphic {} for event {} registered for {}", graphicNumber, eventName, this.entityIdentifier);
 		} else {
-			throw new Exception("Graphic number " + graphicNumber + " does not exist. The highest graphic number is " + this.totalNumberOfIcons);
+			throw new Exception("Event name " + eventName + ", Graphic number " + graphicNumber + " does not exist. The highest graphic number is " + this.totalNumberOfIcons);
 		}
 		
 	}

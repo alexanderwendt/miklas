@@ -264,6 +264,12 @@ public class LocationUtilities {
 	}
 	
 	
+	/**
+	 * Create the perception of the agent
+	 * 
+	 * @param body
+	 * @return
+	 */
 	public ArrayList<ExternalPerceptionInterface> getEntitiesForExternalPerception(Body body) {
 		ArrayList<ExternalPerceptionInterface> result = new ArrayList<ExternalPerceptionInterface>();
 		
@@ -273,11 +279,11 @@ public class LocationUtilities {
 		//double myDirection = body.getOwnerEntity().getDirection()-90;
 		double myDirection = body.getOwnerEntity().getDirection();
 		
-		//Get perceiveable locations as abosulte coordinates
+		//Get perceiveable locations as absolute coordinates
 		ArrayList<LocationCorrespondance> absolutePerceivableLocations = this.getPerceivableRelativeLocationsAsAbsoluteLocations(myLocation, myDirection, RADIUS, true);
 		
 		for (LocationCorrespondance loc : absolutePerceivableLocations) {
-			//Get all entities on that loccation
+			//Get all entities on that location
 			ArrayList<EntityInterface> foundEntities = this.bodyInteractionEngine.getEntityAtLocation(loc.getAbsoluteLocation());
 			
 			//Transform back into relative coordinates
@@ -289,6 +295,12 @@ public class LocationUtilities {
 		return result;
 	}
 	
+	/**
+	 * Create a log output for perception
+	 * 
+	 * @param perception
+	 * @return
+	 */
 	public String printPerception(ArrayList<ExternalPerceptionInterface> perception) {
 		String result = "";
 		final int numberOfObjectsField = 3;

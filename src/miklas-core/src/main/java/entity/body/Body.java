@@ -88,7 +88,7 @@ public class Body implements BodyInterface, BodyMindInterface {
 				positions = positions.concat("(" + x + ":" + y + "),");
 			}
 		}
-		log.info(",{},{},{},{},{}", "Maxhealth", "CurrentHealth", "Reward", "Action", positions);
+		log.debug("{}>{},{},{},{},{}", this.moOwnerEntity.entitiyIdentifier, "Maxhealth", "CurrentHealth", "Reward", "Action", positions);
 				
 	}
 	
@@ -249,7 +249,7 @@ public class Body implements BodyInterface, BodyMindInterface {
 		String perceptionString = this.locationUtils.printPerception(this.getPerception());
 				
 		//Array with agent state: Max Health, Current Health, PainOrPleasure, Perception all fields
-		log.info(",{},{},{},{},{}", this.getBodyPerception().getMaxHealth(), this.getBodyPerception().getCurrentHealth(), this.getBodyPerception().getPainOrPleasure(), currentAction, perceptionString);
+		log.info("{}>{},{},{},{},{}", this.moOwnerEntity.entitiyIdentifier, this.getBodyPerception().getMaxHealth(), this.getBodyPerception().getCurrentHealth(), this.getBodyPerception().getPainOrPleasure(), currentAction, perceptionString);
 		
 		endCycle();
 	}

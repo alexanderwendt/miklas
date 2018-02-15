@@ -35,7 +35,7 @@ public class EventChangeHealth extends BodyEffectEvent {
 		//int nNewHealth = nCurrentHealth + this.healthChange;
 		//this.myBody.setHealth(nNewHealth);
 		
-		log.debug("Player {} health has been changed with {}", this.myBody.getOwnerEntity().getName(), this.healthChange);
+		log.debug("{}>Player {} health has been changed with {}", this.myBody.getOwnerEntity().entitiyIdentifier, this.myBody.getOwnerEntity().getName(), this.healthChange);
 	}
 
 	@Override

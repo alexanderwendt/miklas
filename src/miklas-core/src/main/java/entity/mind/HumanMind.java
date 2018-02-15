@@ -14,6 +14,7 @@ public class HumanMind extends AnimateMind implements GGKeyListener {
 	
 	public HumanMind(Entity poPlayer, BodyMindInterface poBody, EvaluatorManagerMindInterface score) {
 		super(poBody, score);
+		
 		moGameGrid = poPlayer.getGameGrid();
 		moGameGrid.addKeyListener(this);
 	}
@@ -69,7 +70,7 @@ public class HumanMind extends AnimateMind implements GGKeyListener {
 		// Do nothing as this is human control
 		
 		//TEST
-		log.debug("Perception: {}", this.getExternalPerception().toString());
+		log.debug("{}>Perception: {}", "PUTAGENTHERE", this.getExternalPerception().toString());
 		//log.debug(this.getBodyPerception().toString());
 		
 	}

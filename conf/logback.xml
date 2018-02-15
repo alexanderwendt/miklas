@@ -1,22 +1,33 @@
 <configuration debug="true">
   <evaluator name="TEST_EVALUATOR">
-    <expression>logger.contains("ControlGateway") &amp;&amp;
-	message.contains("TestTest")</expression>
+    <expression>logger.contains("Thread-2") &amp;&amp; message.contains("SETHEALTH")</expression> <!-- &amp;&amp; && in XML -->
   </evaluator>
   
-    <!--<logger name="at.tuwien.ict.acona.communicator.core.BidirectionalGatewayAgent" level="WARN"/>-->
-  <logger name="at.tuwien.ict.kore.core.requestinterface.JettyRequestReceiver" level="DEBUG"/>
+  <logger name="event" level="DEBUG"/>
+  <logger name="entity.body" level="DEBUG"/>
+  <logger name="userinterface" level="INFO"/>
+  <logger name="EntityEvaluation" level="INFO"/>
 
   
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <withJansi>false</withJansi>
+    <!--<withJansi>false</withJansi>-->
 	
+	<!--Logger filter -->
 	<filter class="ch.qos.logback.core.filter.EvaluatorFilter">      
-      <evaluator> <!-- defaults to type ch.qos.logback.classic.boolex.JaninoEventEvaluator -->
-        <expression>return logger.contains("BidirectionalGatewayAgent");</expression>
+      <evaluator name="LOGGERFILTER"> <!-- defaults to type ch.qos.logback.classic.boolex.JaninoEventEvaluator -->
+        <expression>return logger.contains("TESTXX");</expression>	<!-- Put a part of a logger name e.g. EventHandler here to block or allow-->
+      </evaluator>
+      <OnMismatch>NEUTRAL</OnMismatch> <!-- Options: NEUTRAL, DENY, ALLOW -->
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+	
+	<!-- Content filter -->
+	<filter class="ch.qos.logback.core.filter.EvaluatorFilter">      
+      <evaluator name="MESSAGEFILTER"> <!-- defaults to type ch.qos.logback.classic.boolex.JaninoEventEvaluator -->
+        <expression>return message.contains("EventHandler");</expression>	<!-- Put a part of a logger name e.g. EventHandler here to block or allow-->
       </evaluator>
       <OnMismatch>NEUTRAL</OnMismatch>
-      <OnMatch>DENY</OnMatch>
+      <OnMatch>NEUTRAL</OnMatch>
     </filter>
 	
     <encoder>
@@ -29,7 +40,7 @@
     </encoder>
   </appender>
   
-  <root level="DEBUG">
+  <root level="TRACE">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

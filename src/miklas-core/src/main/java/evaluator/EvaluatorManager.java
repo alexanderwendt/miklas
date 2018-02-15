@@ -48,7 +48,7 @@ public class EvaluatorManager implements EvaluatorManagerMindInterface {
 
 			//Update visualization
 			this.visualization.updateStats(entityIdentifier, eval);
-			log.debug("Score was updated for entity {} from {} to {}.", entityIdentifier, oldScore, eval.getScore());
+			log.debug("{}>Score was updated from {} to {}.", entityIdentifier, oldScore, eval.getScore());
 		} else {
 			log.debug("Entity {} has not been registered in the score table", entityIdentifier);
 		}		
