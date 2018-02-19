@@ -8,13 +8,10 @@ import entity.EntityInterface;
 /**
  * @author wendt
  * 
- * This interface
+ * This interface only gets the information from the body, like vision, direction.
  *
  */
-public interface BodyInteractionEngineInterface {
-	public void init(Body body);
-	public void setMyDirection(double direction);
-	public void setMyLocation(Location newLocation);
+public interface BodyInteractionEngineConditionInterface {
 	public Location getMyLocation();
 	public Location getNeighborLocationOfMyDirection();
 	public double getMyDirection();

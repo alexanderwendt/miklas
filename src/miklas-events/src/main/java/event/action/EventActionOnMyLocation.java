@@ -1,8 +1,5 @@
 package event.action;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import ch.aplu.jgamegrid.Location;
 import event.EventAction;
 

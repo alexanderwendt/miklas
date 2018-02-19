@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import condition.ConditionInterface;
 import condition.CustomParameter;
+import entity.body.BodyInteractionEngineConditionInterface;
+import entity.body.BodyInteractionEngineInterface;
+import entity.body.BodyInterface;
 import evaluator.EntityEvaluation;
 
 public abstract class Event implements EventInterface, EventConditionInterface {
@@ -16,7 +19,9 @@ public abstract class Event implements EventInterface, EventConditionInterface {
 	protected CustomParameter customParameter;
 	private final String eventName;
 	protected EventHandlerInterface eventHandler;
-	private String entityIdentifier; 
+	private String entityIdentifier;
+	protected BodyInteractionEngineInterface actionExecutor;
+	protected BodyInterface myBody;
 	
 	public Event(String poEventName) {
 		this.eventName = poEventName;
@@ -33,7 +38,6 @@ public abstract class Event implements EventInterface, EventConditionInterface {
 			throw new NullPointerException ("Cannot set properties because a required value is missing for event " + this.eventName);
 		}
 		
-		
 		log.debug("Init Event {}, parameters={}", this.eventName, this.customParameter);
 	}
 	
@@ -47,6 +51,11 @@ public abstract class Event implements EventInterface, EventConditionInterface {
 		
 		return result;
 		
+	}
+	
+	@Override
+	public BodyInteractionEngineConditionInterface getBodyInteractionInformation() {
+		return (BodyInteractionEngineConditionInterface) this.actionExecutor;
 	}
 	
 	@Override
@@ -128,6 +137,26 @@ public abstract class Event implements EventInterface, EventConditionInterface {
 	}
 	
 	public void initPermanentDataStructures() {
+		Datapoint<BodyInterface> dp1 = new Datapoint<BodyInterface>(EventVariables.MYBODY.toString());
+		try {
+			eventHandler.getLocalDataStructureFromContainer(dp1);
+		} catch (Exception e1) {
+			log.error("Cannot load data structure from {}", dp1, e1);
+		}
+		
+		myBody = dp1.getValue();
+		
+		
+		Datapoint<BodyInteractionEngineInterface> dp2 = new Datapoint<BodyInteractionEngineInterface>(EventVariables.INTERACTIONENGINE.toString());
+		try {
+			eventHandler.getLocalDataStructureFromContainer(dp2);
+		} catch (Exception e1) {
+			log.error("Cannot load data structure from {}", dp2, e1);
+		}
+		actionExecutor = dp2.getValue();
+
+		
+		
 		//From the permananent datatypes, init the structures, which shall be used in the event
 		initEventWithPermanentStructures();
 		

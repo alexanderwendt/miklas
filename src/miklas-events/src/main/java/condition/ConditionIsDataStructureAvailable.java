@@ -7,6 +7,19 @@ import entity.body.BodyInterface;
 import event.Datapoint;
 import event.EventVariables;
 
+/**
+ * @author wendt
+ * 
+ * This condition checks if a data structure is available in the local temporary data storage. If yes, then the condition is true. The condition is set
+ * [CONDITIONNAME].datastructurename
+ *
+ * Example:
+ * condition.availabledatastructure.name=CHECKDATASTRUCTUREAVAILABLE
+ * condition.availabledatastructure.classname=condition.ConditionIsDataStructureAvailable
+ * 
+ * 
+ *
+ */
 public class ConditionIsDataStructureAvailable extends Condition {
 
 	private final String DATASTRUCTURENAMEPROPERTY  = "datastructurename";

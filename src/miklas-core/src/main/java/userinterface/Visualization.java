@@ -268,14 +268,19 @@ public class Visualization extends JFrame implements VisualizationEvaluationInte
 		
 		gameEngine.getGameGrid().doPause();
 		gameEngine.getGameGrid().stopGameThread();
-		gameEngine.getMusicManager().stopMusic();
+		if (this.gameEngine.getMusicManager() != null) {
+			gameEngine.getMusicManager().stopMusic();
+		}
+		
 		
 		if(parent != null) {	// only if GUILauncher is used
 			this.setVisible(false);
 			parent.setVisible(true);
 		}
-		else
+		else {
 			System.exit(0);
+		}
+			
 	}
 
 	private int countAnimateBodies() {

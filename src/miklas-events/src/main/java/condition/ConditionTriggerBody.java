@@ -7,6 +7,16 @@ import entity.EntityInterface;
 import event.Datapoint;
 import event.EventVariables;
 
+/**
+ * @author wendt
+ * 
+ * Condition to check if a bodystring in the custom parameter "triggerbody" is the body of the caller. The caller object body is checked.
+ * 
+ * Config file example
+ * 	condition.triggerbody.name=TRIGGERBODY
+ *	condition.triggerbody.classname=condition.ConditionTriggerBody
+ *
+ */
 public class ConditionTriggerBody extends Condition {
 	
 	private ArrayList<String> triggerBodyTypes;

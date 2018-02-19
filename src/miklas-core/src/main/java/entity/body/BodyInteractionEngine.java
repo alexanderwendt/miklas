@@ -11,7 +11,7 @@ import condition.Condition;
 import entity.Entity;
 import entity.EntityInterface;
 
-public class BodyInteractionEngine implements BodyInteractionEngineInterface {
+public class BodyInteractionEngine implements BodyInteractionEngineInterface, BodyInteractionEngineConditionInterface {
 	
 	protected static final Logger log = LoggerFactory.getLogger(BodyInteractionEngine.class);
 	

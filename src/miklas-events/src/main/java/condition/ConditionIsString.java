@@ -6,6 +6,20 @@ import java.util.HashMap;
 import event.Datapoint;
 import event.EventVariables;
 
+/**
+ * @author wendt
+ * 
+ * Checks if a string from a certain property "sourceproperty" has the value of the "comparedatastructure".
+ * 
+ * Config file example
+ * 	condition.triggeraction.name=TRIGGERACTION
+ *	condition.triggeraction.classname=condition.ConditionIsString
+ *	condition.triggeraction.custom.sourceproperty=triggeraction
+ *	condition.triggeraction.custom.comparedatastructure=ACTIONOFCALLER
+ *
+ * The source property is triggeraction. An event sets the ...triggeraction=MOVE. If the local variable ACTIONOFCALLER has this value, then the condition is true.
+ *
+ */
 public class ConditionIsString extends Condition {
 
 	private final String SOURCEPROPERTY  = "sourceproperty";
@@ -26,7 +40,6 @@ public class ConditionIsString extends Condition {
 		
 		String actionObject="";
 		try {
-			//actionObject = (String)this.assignedEvent.getLocalDataStructure(compareDataStructureIdentifier, String.class);
 			Datapoint<String> dp = new Datapoint<String>(compareDataStructureIdentifier);
 			boolean res = this.assignedEvent.getLocalDataStructure(dp);
 			actionObject = dp.getValue();

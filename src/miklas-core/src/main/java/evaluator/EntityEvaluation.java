@@ -117,7 +117,7 @@ public class EntityEvaluation {
 	
 	private void appendLogEntry(int timestamp) {
 		if(curLocation != null)
-			log.info(agentIdentifier + ", " + timestamp + ", " + health + ", " + score + ", " +
+			log.debug(agentIdentifier + ">" + timestamp + ", " + health + ", " + score + ", " +
 					positiveActions + ", " + negativeActions + ", " + neutralActions +
 					", " + curLocation.getX() + ", " + curLocation.getY());
 	}

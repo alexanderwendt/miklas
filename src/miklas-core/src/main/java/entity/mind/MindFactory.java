@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import condition.Condition;
 import config.MindConfig;
 import entity.Entity;
 import entity.body.BodyMindInterface;
@@ -56,7 +55,7 @@ public class MindFactory {
 		return oResult;
 	}
 	
-	public AnimateMindInterface createExternalMind(BodyMindInterface poBody, MindConfig mindConfig) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public AnimateMindInterface createExternalMind(BodyMindInterface poBody, MindConfig mindConfig) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		//Create the External mind but do not set dependencies yet
 		AnimateMindInterface result = null;
 		ExternalMind internalMind = new ExternalMind(poBody, score);
@@ -91,8 +90,10 @@ public class MindFactory {
 			throw new SecurityException(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			log.error("Wrong arguments in constrctor of class {}", className, e);
+			throw new IllegalArgumentException(e.getMessage());
 		} catch (InvocationTargetException e) {
 			log.error("Cannot invoke method of class {}", className, e);
+			throw new InvocationTargetException(e, e.getMessage());
 		}
 		
 		result = internalMind;

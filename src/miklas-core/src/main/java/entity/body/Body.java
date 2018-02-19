@@ -101,12 +101,14 @@ public class Body implements BodyInterface, BodyMindInterface {
 		this.eventHandlerForReactions.init(true, true); //Execute eventhandler as long as events can be executed but exclude already executed events
 		
 		//Set this body as permanent data structure to both event handlers
+		//Add permanent variables for each eventhandler separately. The different handlers do not share any values.
 		this.eventHandlerForActions.setLocalPermanentDataStructure(new Datapoint<BodyInterface>(EventVariables.MYBODY.toString(), this));
 		this.eventHandlerForReactions.setLocalPermanentDataStructure(new Datapoint<BodyInterface>(EventVariables.MYBODY.toString(), this));
 		this.eventHandlerForReactions.setLocalPermanentDataStructure(new Datapoint<BodyInteractionEngineInterface>(EventVariables.INTERACTIONENGINE.toString(), this.interactionEngine));
 		this.eventHandlerForMyActionExecutions.setLocalPermanentDataStructure(new Datapoint<BodyInterface>(EventVariables.MYBODY.toString(), this));
 		this.eventHandlerForMyActionExecutions.setLocalPermanentDataStructure(new Datapoint<BodyInteractionEngineInterface>(EventVariables.INTERACTIONENGINE.toString(), this.interactionEngine));
 		this.eventHandlerForBodyInternals.setLocalPermanentDataStructure(new Datapoint<BodyInterface>(EventVariables.MYBODY.toString(), this));
+		this.eventHandlerForBodyInternals.setLocalPermanentDataStructure(new Datapoint<BodyInteractionEngineInterface>(EventVariables.INTERACTIONENGINE.toString(), this.interactionEngine));
 		
 		//Init all permanent data structures
 		this.eventHandlerForActions.initLocalPermanentDataStructuresInEvents();
@@ -116,9 +118,9 @@ public class Body implements BodyInterface, BodyMindInterface {
 		
 		//Execute init events for the body - used to e.g. reduce init health of the agent. The agent executes the action init on itself
 		try {
-			eventHandlerForActions.setLocalTemporaryDataStructure(new Datapoint<String>(EventVariables.ACTIONOFCALLER.toString(), PredefinedBodyAction.INIT.toString()));
-			eventHandlerForActions.setLocalTemporaryDataStructure(new Datapoint<EntityInterface>(EventVariables.ENTITYOFCALLER.toString(), this.moOwnerEntity));
-			this.eventHandlerForActions.executeMatchingEvents();
+			eventHandlerForActions.setLocalTemporaryDataStructure(new Datapoint<String>(EventVariables.ACTIONOFCALLER.toString(), PredefinedBodyAction.INIT.toString()));	//This is the first action of the agent
+			eventHandlerForActions.setLocalTemporaryDataStructure(new Datapoint<EntityInterface>(EventVariables.ENTITYOFCALLER.toString(), this.moOwnerEntity));			//The init action was called by 
+			this.eventHandlerForActions.executeMatchingEvents();	//Execute any matching events for the init action.
 		} catch (Exception e) {
 			log.error("Cannot execute the internal body action INIT on the body at initilalization",e );
 			throw e;
@@ -249,7 +251,7 @@ public class Body implements BodyInterface, BodyMindInterface {
 		String perceptionString = this.locationUtils.printPerception(this.getPerception());
 				
 		//Array with agent state: Max Health, Current Health, PainOrPleasure, Perception all fields
-		log.info("{}>{},{},{},{},{}", this.moOwnerEntity.entitiyIdentifier, this.getBodyPerception().getMaxHealth(), this.getBodyPerception().getCurrentHealth(), this.getBodyPerception().getPainOrPleasure(), currentAction, perceptionString);
+		log.debug("{}>{},{},{},{},{}", this.moOwnerEntity.entitiyIdentifier, this.getBodyPerception().getMaxHealth(), this.getBodyPerception().getCurrentHealth(), this.getBodyPerception().getPainOrPleasure(), currentAction, perceptionString);
 		
 		endCycle();
 	}

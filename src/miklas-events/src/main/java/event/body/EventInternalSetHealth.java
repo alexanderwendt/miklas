@@ -55,13 +55,13 @@ public class EventInternalSetHealth extends BodyEffectEvent {
 			
 			if (newHealth<=this.minHealth) {
 				setHealth = this.minHealth;
-				log.info("Agent lost all health={}", this.minHealth);
+				log.info("{}>Agent lost all health={}", this.myBody.getEntityIdentifier(), this.minHealth);
 			} else if (newHealth>=this.maxHealth) {
 				setHealth = this.maxHealth;
-				log.info("Agent has already its max health={}", this.maxHealth);
+				log.info("{}>Agent has already its max health={}", this.myBody.getEntityIdentifier(), this.maxHealth);
 			} else {
 				setHealth = newHealth;
-				log.info("Set new health={}", setHealth);
+				log.debug("{}>Set new health={}", this.myBody.getEntityIdentifier(), setHealth);
 			}
 			
 			//Set new health

@@ -5,8 +5,6 @@ import entity.body.BodyInterface;
 
 public abstract class EventAction extends Event {
 	
-	protected BodyInterface myBody;
-	private BodyInteractionEngineInterface actionExecutor;
 	
 	protected String triggerActionName;
 
@@ -33,15 +31,16 @@ public abstract class EventAction extends Event {
 	@Override
 	protected void initEventWithPermanentStructures() {
 		try {
+			//Datapoint<BodyInterface> dp1 = new Datapoint<BodyInterface>(EventVariables.MYBODY.toString());
 			//myBody = (BodyInterface)eventHandler.getLocalDataStructureFromContainer(EventVariables.MYBODY.toString(), BodyInterface.class);
 			//actionExecutor = (BodyInteractionEngineInterface)eventHandler.getLocalDataStructureFromContainer(EventVariables.INTERACTIONENGINE.toString(), BodyInteractionEngineInterface.class);
-			Datapoint<BodyInterface> dp = new Datapoint<BodyInterface>(EventVariables.MYBODY.toString());
-			Datapoint<BodyInteractionEngineInterface> dp2 = new Datapoint<BodyInteractionEngineInterface>(EventVariables.INTERACTIONENGINE.toString());
-			boolean res1 = eventHandler.getLocalDataStructureFromContainer(dp);
-			boolean res2 = eventHandler.getLocalDataStructureFromContainer(dp2);
 			
-			myBody = dp.getValue();
-			actionExecutor = dp2.getValue();
+			
+			
+			//eventHandler.getLocalDataStructureFromContainer(dp1);
+			
+			//myBody = dp1.getValue();
+			
 			
 		} catch (Exception e) {
 			log.error("", e);
