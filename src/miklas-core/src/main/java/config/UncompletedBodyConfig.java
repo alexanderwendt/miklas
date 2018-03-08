@@ -5,7 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UncompletedBodyConfig {
+	private final static int defaultVisionRadius = 3;
+	private final static String defaultVisionType = "half";
+	
 	private final String bodyName;
+	private int visionRadius;
+	private String visionType;
 	private final LinkedList<String> parentBodyNames = new LinkedList<String>();
 	private String mindName;
 	private final ArrayList<String> eventOnActionName = new ArrayList<String>();
@@ -17,6 +22,8 @@ public class UncompletedBodyConfig {
 		super();
 		
 		this.bodyName = source.bodyName;
+		this.visionRadius = source.visionRadius;
+		this.visionType = source.visionType;
 		this.parentBodyNames.addAll(source.parentBodyNames);
 		this.mindName = source.mindName;
 		this.eventOnActionName.addAll(source.eventOnActionName);
@@ -25,7 +32,7 @@ public class UncompletedBodyConfig {
 		this.eventOnBodyInternalsName.addAll(source.eventOnBodyInternalsName);
 	}
 	
-	public UncompletedBodyConfig(String bodyTypeName, String parentBodyType, String mind, 
+	public UncompletedBodyConfig(String bodyTypeName, int visionRadius, String visionType, String parentBodyType, String mind, 
 			ArrayList<String> eventOnActionName,
 			ArrayList<String> eventOnReactionName,
 			ArrayList<String> eventOnOwnActionName,
@@ -34,6 +41,8 @@ public class UncompletedBodyConfig {
 		super();
 		
 		this.bodyName = bodyTypeName;
+		this.visionRadius = visionRadius;
+		this.visionType = visionType;
 		if (parentBodyType.isEmpty()==false) {
 			this.parentBodyNames.addFirst(parentBodyType);
 		}
@@ -90,6 +99,24 @@ public class UncompletedBodyConfig {
 			this.mindName=parent.mindName;
 		}
 		
+		//If no vision radius has been set, take the vision radius of the parent
+		if (visionRadius==-1) {
+			if (parent.visionRadius==-1) {
+				this.visionRadius = defaultVisionRadius;
+			} else {
+				this.visionRadius = parent.visionRadius;
+			}
+		}
+		
+		//If no vision type has been set, it shall be imported from the parent. If it cannot be imported from the parent, the default type "half" is used.
+		if (this.visionType==null || this.visionType.isEmpty()) {
+			if (parent.visionType==null || parent.visionType.isEmpty()) {
+				this.visionType = defaultVisionType;
+			} else {
+				this.visionType = parent.visionType;
+			}
+		}
+		
 		//Enhance with parent bodies of the parent
 		this.parentBodyNames.addAll(this.parentBodyNames.size()-1, parent.parentBodyNames);
 		
@@ -118,6 +145,14 @@ public class UncompletedBodyConfig {
 		builder.append(bodyName);
 		//builder.append("]");
 		return builder.toString();
+	}
+
+	public int getVisionRadius() {
+		return visionRadius;
+	}
+
+	public String getVisionType() {
+		return visionType;
 	}
 
 }

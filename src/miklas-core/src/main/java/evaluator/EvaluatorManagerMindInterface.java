@@ -18,4 +18,5 @@ public interface EvaluatorManagerMindInterface {
 	public void registerEntity(String poEntityName, int health) throws Exception;
 	public void registerEvent(String poEventName, int pnScoreChange) throws Exception;
 	public int getLastReward(String poEntityName, boolean reset) throws Exception;
+	public EvaluatorMindInterface getEvaluation(String entityIdentifier);
 }

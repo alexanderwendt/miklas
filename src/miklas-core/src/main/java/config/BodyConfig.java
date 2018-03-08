@@ -18,7 +18,8 @@ import java.util.List;
  */
 public class BodyConfig {
 	private final String bodyName;
-	//private final String parentBodyName;
+	private final int visionRadius;
+	private final String visionType;
 	private final LinkedList<String> parentBodyNames = new LinkedList<String>();
 	private final MindConfig mind;
 	private final ArrayList<EventConfig> eventOnActionName;
@@ -26,10 +27,12 @@ public class BodyConfig {
 	private final ArrayList<EventConfig> eventOnOwnActionName;
 	private final ArrayList<EventConfig> eventOnBodyInternalsName;
 	
-	public BodyConfig(String moBodyTypeName, List<String> parentBodyTypes, MindConfig poMind, ArrayList<EventConfig> moEventOnActionName, ArrayList<EventConfig> moEventOnReactionName, ArrayList<EventConfig> eventOnOwnActionName, ArrayList<EventConfig> eventOnBodyInternalsName) {
+	public BodyConfig(String moBodyTypeName, int visionRadius, String visionTypeHalf, List<String> parentBodyTypes, MindConfig poMind, ArrayList<EventConfig> moEventOnActionName, ArrayList<EventConfig> moEventOnReactionName, ArrayList<EventConfig> eventOnOwnActionName, ArrayList<EventConfig> eventOnBodyInternalsName) {
 		super();
 		
 		this.bodyName = moBodyTypeName;
+		this.visionRadius = visionRadius;
+		this.visionType = visionTypeHalf;
 		this.eventOnActionName = moEventOnActionName;
 		this.eventOnReactionName = moEventOnReactionName;
 		this.eventOnOwnActionName = eventOnOwnActionName;
@@ -85,6 +88,14 @@ public class BodyConfig {
 
 	public List<String> getParentBodyType() {
 		return parentBodyNames;
+	}
+
+	public int getVisionRadius() {
+		return visionRadius;
+	}
+
+	public String isVisionType() {
+		return visionType;
 	}
 
 

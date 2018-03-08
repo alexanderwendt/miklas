@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entity.body.BodyMindInterface;
 import evaluator.EvaluatorManagerMindInterface;
+import evaluator.EvaluatorMindInterface;
 
 public class ExternalMind extends AnimateMind implements ExternalMindBodyInterface {
 
@@ -47,6 +48,16 @@ public class ExternalMind extends AnimateMind implements ExternalMindBodyInterfa
 	@Override
 	public int getLastReward(boolean reset) throws Exception {
 		return super.getLastReward(reset);
+	}
+
+	@Override
+	public String getActorId() {
+		return this.getBody().getEntityIdentifier();
+	}
+
+	@Override
+	public EvaluatorMindInterface getEvalution() {
+		return this.getScore().getEvaluation(getActorId());
 	}
 
 }

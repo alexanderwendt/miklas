@@ -31,6 +31,8 @@ public class ConfigLoader {
 	//private static final String GAME
 	
 	private static final String BODYTYPETYPENAMESUFFIX = "typename";
+	private static final String BODYVISIONRADIUSSUFFIX = "visionradius";
+	private static final String BODYVISIONTYPESUFFIX = "visiontype";
 	private static final String BODYTYPEEFFECTONACTIONSUFFIX = "effectonaction";
 	private static final String BODYTYPEEFFECTONREACTIONSUFFIX = "effectonreaction";
 	private static final String BODYTYPEEFFECTOFOWNACTIONSUFFIX = "possibleaction";
@@ -50,6 +52,7 @@ public class ConfigLoader {
 	private static final String EVENTPERMANENTGRAPHICCHANGESUFFIX = "permanentgraphic";
 	
 	private static final String ACTORACTORNAMESUFFIX = "actorname";
+	private static final String ACTORACTORIDSUFFIX = "actorid";
 	private static final String ACTORBODYTYPENAMESUFFIX = "bodytypename";
 	private static final String ACTORICONGRAPHICPATHSUFFIX  = "icongraphicpath";
 	private static final String ACTORROTATEGRAPHICWITHDIRECTIONSUFFIX = "rotategraphicwithdirection";
@@ -171,10 +174,10 @@ public class ConfigLoader {
 			//Load all minds
 			availableMinds = loadMindConfig();
 			
-			//Load all uncompleted bodies, only strings from config file, in order to match bodies with parent bodies
+			//Load all uncompleted bodies, only strings from config file, in order to match bodies with parent bodies. Here bodies without parents are loaded
 			availableUncompletedBodyConfig = loadUncompletedBodyConfigs();
 			
-			//Merge parent bodies and children
+			//Merge parent bodies and children and the properties of the parents are taken over by the children, if they don't have any defined values
 			availableCompletedBodyConfig = completeBodyConfig(availableUncompletedBodyConfig);
 			
 			//Load all bodytypes
@@ -411,8 +414,28 @@ public class ConfigLoader {
 		UncompletedBodyConfig uncompletedBody = null;
 		
 		try {
+			//Load bodytype name
 			String typeName = phModIni.getString(BODYTYPEPREFIX + "." + number + "." + BODYTYPETYPENAMESUFFIX);
 			log.trace("Load body type config name: {}", typeName);
+			
+			//Load vision radius
+			int visionRadius = -1;
+			if (phModIni.propertyExists(BODYTYPEPREFIX + "." + number + "." + BODYVISIONRADIUSSUFFIX)==true) {
+				visionRadius = phModIni.getInt(BODYTYPEPREFIX + "." + number + "." + BODYVISIONRADIUSSUFFIX);
+				log.trace("Load vision radius: {}", visionRadius);
+			} else {
+				log.trace("Load default vision radius: {}", visionRadius);
+			}
+			
+			//Load vision radius
+			String visionType = "";
+			if (phModIni.propertyExists(BODYTYPEPREFIX + "." + number + "." + BODYVISIONTYPESUFFIX)==true) {
+				visionType = phModIni.getString(BODYTYPEPREFIX + "." + number + "." + BODYVISIONTYPESUFFIX);
+				log.trace("Load vision type: {}", visionType);
+			} else {
+				log.trace("Load default vision type: {}", visionType);
+			}
+			
 			
 			//Cheeck if a parent body exists
 			String parentBody = phModIni.getString(BODYTYPEPREFIX + "." + number + "." + BODYTYPEPARENTBODYSUFFIX);
@@ -436,7 +459,7 @@ public class ConfigLoader {
 			ArrayList<String> effectBodyInternalEvents = phModIni.getStringFromList(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTOFBODYINTERNALEVENTSSUFFIX, ",");
 			log.trace("Events on body internal events: {}", effectBodyInternalEvents);
 			
-			uncompletedBody = new UncompletedBodyConfig(typeName, parentBody, mindName, effectOnActionEventConfigList, effectOnReaction, effectOnOwnAction, effectBodyInternalEvents);
+			uncompletedBody = new UncompletedBodyConfig(typeName, visionRadius, visionType, parentBody, mindName, effectOnActionEventConfigList, effectOnReaction, effectOnOwnAction, effectBodyInternalEvents);
 		} catch (Exception e) {
 			log.error("Cannot load config for {}", number, e);
 			throw new Exception("Cannot load config");
@@ -446,18 +469,7 @@ public class ConfigLoader {
 	}
 	
 	private BodyConfig loadBodyTypeConfig(UncompletedBodyConfig uncompleteBodyConfig, HashMap<String, EventConfig> availableEvents) throws Exception {
-		//String typeName = phModIni.getString(BODYTYPEPREFIX + "." + number + "." + BODYTYPETYPENAMESUFFIX);
-		//log.trace("Load body type config name: {}", typeName);
-		
-		//Cheeck if a parent body exists
-		//String parentBody = phModIni.getString(BODYTYPEPREFIX + "." + number + "." + BODYTYPEPARENTBODYSUFFIX);
-		//log.trace("Parent body name: {}", parentBody);
-		//BodyConfig parentBodyConfig = this.availableBodyTypes.get(parentBody);
-		
-		//MindConfig mindConfig;
-		//if (uncompleteBodyConfig.getMind()) {
-		//	String mindName = phModIni.getString(BODYTYPEPREFIX + "." + number + "." + BODYTYPEMINDSUFFIX);
-			//Get mind
+
 		MindConfig mindConfig = this.availableMinds.get(uncompleteBodyConfig.getMindName());
 		if (uncompleteBodyConfig.getMindName().length()>0 && mindConfig==null) {
 			log.error("No mind with the name {} exists.", uncompleteBodyConfig.getMindName());
@@ -465,59 +477,20 @@ public class ConfigLoader {
 		}
 			
 		log.trace("Mind name: {}", uncompleteBodyConfig.getMindName());
-		//} else {
-		//	mindConfig = parentBodyConfig.getMind();
-		//	log.trace("Parent mind name: {}", mindConfig);
-		//}
-		
-		//Get events of action on the body
-		//ArrayList<EventConfig> effectOnActionEventConfigList;
-		//if (this.phModIni.propertyExists(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTONACTIONSUFFIX)==true) {
-		//	ArrayList<String> effectOnAction = phModIni.getStringFromList(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTONACTIONSUFFIX, ",");
-		
+
 		ArrayList<EventConfig> effectOnActionEventConfigList = getEventConfigsFromList(uncompleteBodyConfig.getEventOnActionName(), availableEvents);
 		log.trace("Events on actions: {}", uncompleteBodyConfig.getEventOnActionName());
-		//} else {
-		//	effectOnActionEventConfigList = parentBodyConfig.getEventOnActionNames();
-		//	log.trace("Parent events on actions: {}", effectOnActionEventConfigList);
-		//}
-		
-		//Get events on reaction
-		//ArrayList<EventConfig> effectOnReactionEventConfigList;
-		//if (this.phModIni.propertyExists(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTONREACTIONSUFFIX)==true) {
-		//	ArrayList<String> effectOnReaction = phModIni.getStringFromList(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTONREACTIONSUFFIX, ",");
-		
+
 		ArrayList<EventConfig> effectOnReactionEventConfigList = getEventConfigsFromList(uncompleteBodyConfig.getEventOnReactionName(), availableEvents);
 		log.trace("Events on reactions: {}", uncompleteBodyConfig.getEventOnReactionName());
-		//} else {
-		//	effectOnReactionEventConfigList = parentBodyConfig.getEventOnReactionNames();
-		//}
-		
-		//Get events on own actions
-		//ArrayList<EventConfig> effectOnOwnActionEventConfigList;
-		//if (this.phModIni.propertyExists(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTOFOWNACTIONSUFFIX)==true) {
-		//	ArrayList<String> effectOnOwnAction = phModIni.getStringFromList(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTOFOWNACTIONSUFFIX, ",");
-			
+
 		ArrayList<EventConfig> effectOnOwnActionEventConfigList = getEventConfigsFromList(uncompleteBodyConfig.getEventOnOwnActionName(), availableEvents);
 		log.trace("Events on own actions: {}", uncompleteBodyConfig.getEventOnOwnActionName());
-		//} else {
-		//	effectOnOwnActionEventConfigList = parentBodyConfig.getEventOnOwnActionName();
-		//	log.trace("Parent events on own actions: {}", effectOnOwnActionEventConfigList);
-		//}//
 
-		//Get events for body internal events
-		//ArrayList<EventConfig> effectOnBodyInternalsEventConfigList;
-		//if (this.phModIni.propertyExists(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTOFBODYINTERNALEVENTSSUFFIX)==true) {
-		//	ArrayList<String> effectBodyInternalEvents = phModIni.getStringFromList(BODYTYPEPREFIX + "." + number + "." + BODYTYPEEFFECTOFBODYINTERNALEVENTSSUFFIX, ",");
-			
 		ArrayList<EventConfig> effectOnBodyInternalsEventConfigList = getEventConfigsFromList(uncompleteBodyConfig.getEventOnBodyInternalsName(), availableEvents);
 		log.trace("Events on body internal events: {}", uncompleteBodyConfig.getEventOnBodyInternalsName());
-		//} else {
-		//	effectOnBodyInternalsEventConfigList = parentBodyConfig.getEventOnBodyInternalsName();
-		//	log.trace("Parent events on body internal events: {}", effectOnBodyInternalsEventConfigList);
-		//}
 
-		BodyConfig bodyConfig = new BodyConfig(uncompleteBodyConfig.getBodyName(), uncompleteBodyConfig.getParentBodyNames(), mindConfig, effectOnActionEventConfigList, effectOnReactionEventConfigList, effectOnOwnActionEventConfigList, effectOnBodyInternalsEventConfigList);
+		BodyConfig bodyConfig = new BodyConfig(uncompleteBodyConfig.getBodyName(), uncompleteBodyConfig.getVisionRadius(), uncompleteBodyConfig.getVisionType(), uncompleteBodyConfig.getParentBodyNames(), mindConfig, effectOnActionEventConfigList, effectOnReactionEventConfigList, effectOnOwnActionEventConfigList, effectOnBodyInternalsEventConfigList);
 		
 		return bodyConfig;
 	}
@@ -563,6 +536,11 @@ public class ConfigLoader {
 	private ActorConfig loadActorConfig(String i, HashMap<String, BodyConfig> availableBodyTypes) throws Exception {
 		String actorName = phModIni.getString(ACTORPREFIX + "." + i + "." + ACTORACTORNAMESUFFIX);
 		log.trace("Load actor name: {}", actorName);
+		String actorId = "";
+		if (phModIni.propertyExists(ACTORPREFIX + "." + i + "." + ACTORACTORIDSUFFIX)==true) {
+			actorId = phModIni.getString(ACTORPREFIX + "." + i + "." + ACTORACTORIDSUFFIX);
+		}
+		log.trace("Load actor optional id: {} (\"\"=default id used)", actorId);		
 		String bodyTypeName = phModIni.getString(ACTORPREFIX + "." + i + "." + ACTORBODYTYPENAMESUFFIX);
 		log.trace("bodytype: {}", bodyTypeName);
 		String iconGraphicPath = phModIni.getString(ACTORPREFIX + "." + i + "." + ACTORICONGRAPHICPATHSUFFIX);
@@ -587,7 +565,7 @@ public class ConfigLoader {
 		
 		BodyConfig bodyConfig = getBodyTypeConfig(bodyTypeName, availableBodyTypes);
 		
-		ActorConfig actorConfig = new ActorConfig(actorName, bodyConfig, iconGraphicPath, rotateGraphicDirection, initRotation, numberoficonsforInterval, totalnumberoficons, intervalforgraphicchange, worldMapChar, evaluateActor);
+		ActorConfig actorConfig = new ActorConfig(actorName, actorId, bodyConfig, iconGraphicPath, rotateGraphicDirection, initRotation, numberoficonsforInterval, totalnumberoficons, intervalforgraphicchange, worldMapChar, evaluateActor);
 		
 		actorConfig.addAllEventSounds(eventSounds);
 		

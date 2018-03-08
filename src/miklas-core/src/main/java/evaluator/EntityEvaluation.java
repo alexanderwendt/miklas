@@ -9,7 +9,7 @@ import ch.aplu.jgamegrid.Location;
 import entity.mind.BodyPerception;
 import entity.mind.ExternalPerception;
 
-public class EntityEvaluation {
+public class EntityEvaluation implements EvaluatorMindInterface {
 	
 	private final String agentIdentifier;
 	private final Logger log = LoggerFactory.getLogger(EntityEvaluation.class);
@@ -36,6 +36,7 @@ public class EntityEvaluation {
 	public int getHealth() {
 		return health;
 	}
+	
 	public void setHealth(int timestamp, int health) {
 		this.health = health;
 		appendLogEntry(timestamp);
@@ -44,9 +45,11 @@ public class EntityEvaluation {
 	public int getScore() {
 		return score;
 	}
+	
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
 	public int getPositiveActions() {
 		return positiveActions;
 	}

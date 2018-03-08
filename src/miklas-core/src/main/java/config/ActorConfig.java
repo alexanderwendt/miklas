@@ -14,6 +14,9 @@ public class ActorConfig {
 	 * Actor name
 	 */
 	private final String moActorName;
+	
+	private final String actorId;
+
 	/**
 	 * Icon graphic path
 	 */
@@ -42,9 +45,10 @@ public class ActorConfig {
 	private HashMap<String, Integer> moEventGraphic = new HashMap<String, Integer>();
 	
 	
-	public ActorConfig(String moActorName, BodyConfig moBodyTypeConfig, String moIconGraphicAddress, boolean mbRotateGraphicWithDirection, double initRotation, int numberOfGraphicIconsUsedForInterval, int totalNumberOfIcons, int mnGraphicStep, char worldMapChar, boolean evaluateActor) {
+	public ActorConfig(String moActorName, String actorId, BodyConfig moBodyTypeConfig, String moIconGraphicAddress, boolean mbRotateGraphicWithDirection, double initRotation, int numberOfGraphicIconsUsedForInterval, int totalNumberOfIcons, int mnGraphicStep, char worldMapChar, boolean evaluateActor) {
 		super();
 		this.moActorName = moActorName;
+		this.actorId = actorId;
 		this.moBodyTypeConfig= moBodyTypeConfig;
 		this.moIconGraphicAddress = moIconGraphicAddress;
 		this.mbRotateGraphicWithDirection = mbRotateGraphicWithDirection;
@@ -64,6 +68,10 @@ public class ActorConfig {
 
 	public String getActorName() {
 		return moActorName;
+	}
+	
+	public String getActorId() {
+		return actorId;
 	}
 
 	public BodyConfig getBodyTypeConfig() {

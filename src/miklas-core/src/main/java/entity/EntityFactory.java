@@ -41,7 +41,12 @@ public class EntityFactory {
 		//Entity(GameGrid poGameEngine, String poName, String prGraphicPath, boolean pbRotateGraphicWithMovement, int pnGraphicsUsedCount, int pnGraphicUpdateInterval)
 		Entity entity = null;
 		try {
-			entity = new Entity(moThisGameGrid, actorConfig.getActorName(), String.valueOf(entityCount), actorConfig.getIconGraphicAddress(), actorConfig.isRotateGraphicWithDirection(), actorConfig.getTotalNumberOfIcons(), actorConfig.getMnGraphicStep(), entityLayer, moScoreManager, this.visualization);
+			String optionalActorId = String.valueOf(entityCount);
+			if (actorConfig.getActorId().isEmpty()==false) {
+				optionalActorId = actorConfig.getActorId();
+			}
+			
+			entity = new Entity(moThisGameGrid, actorConfig.getActorName(), optionalActorId, actorConfig.getIconGraphicAddress(), actorConfig.isRotateGraphicWithDirection(), actorConfig.getTotalNumberOfIcons(), actorConfig.getMnGraphicStep(), entityLayer, moScoreManager, this.visualization);
 			log.trace("Memory for entity {} allocated.", entity);
 		} catch (Exception e) {
 			log.error("Cannot create entity actor name={}, entity count = {}", actorConfig.getActorName(), entityCount, e);

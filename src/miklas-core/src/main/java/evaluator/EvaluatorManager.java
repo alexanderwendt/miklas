@@ -104,4 +104,9 @@ public class EvaluatorManager implements EvaluatorManagerMindInterface {
 		return moScoreTable.get(poEntityName).getLastReward(reset);
 	}
 
+	@Override
+	public EvaluatorMindInterface getEvaluation(String entityIdentifier) {
+		return this.moScoreTable.get(entityIdentifier);
+	}
+
 }

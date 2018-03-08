@@ -15,7 +15,7 @@ public abstract class AnimateMind implements AnimateMindInterface {
 	private final BodyMindInterface body;
 	private final EvaluatorManagerMindInterface score;
 	
-	private String currentAction;
+	//private String currentAction;
 	
 	protected static final Logger log = LoggerFactory.getLogger(AnimateMind.class);
 	
@@ -65,7 +65,7 @@ public abstract class AnimateMind implements AnimateMindInterface {
 	
 	protected void setAction(String action) {
 		try {
-			currentAction = action;
+			//currentAction = action;
 			this.body.executeAction(action);
 		} catch (Exception e) {
 			log.error("Cannot set action {}. The simulator does not allow it", action);
@@ -76,6 +76,14 @@ public abstract class AnimateMind implements AnimateMindInterface {
 	
 	protected int getLastReward(boolean reset) throws Exception {
 		return score.getLastReward(body.getEntityIdentifier(), reset);
+	}
+	
+	protected BodyMindInterface getBody() {
+		return body;
+	}
+
+	protected EvaluatorManagerMindInterface getScore() {
+		return score;
 	}
 
 }

@@ -2,6 +2,9 @@ package entity.mind;
 
 import java.util.ArrayList;
 
+import evaluator.EvaluatorManagerMindInterface;
+import evaluator.EvaluatorMindInterface;
+
 /**
  * This interface is used by the external agent to interact with the game
  * 
@@ -29,6 +32,19 @@ public interface ExternalMindBodyInterface {
 	 * @return
 	 */
 	public BodyPerceptionInterface getBodyPerception();
+	
+	
+	/**
+	 * Get the last reward
+	 * 
+	 * @param reset
+	 * @return
+	 * @throws Exception
+	 */
 	public int getLastReward(boolean reset) throws Exception;
+	
+	public String getActorId();
+	
+	public EvaluatorMindInterface getEvalution();
 	
 }

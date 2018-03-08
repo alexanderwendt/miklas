@@ -12,12 +12,13 @@ import entity.mind.ExternalPerceptionInterface;
 
 public class LocationUtilities {
 	
-	private static final int RADIUS = 3;
+	private final int radius;
 	
 	private final BodyInteractionEngineInterface bodyInteractionEngine;
 	
-	public LocationUtilities(BodyInteractionEngineInterface bodyInteractionEngine) {
+	public LocationUtilities(BodyInteractionEngineInterface bodyInteractionEngine, int visionRadius) {
 		this.bodyInteractionEngine = bodyInteractionEngine;
+		this.radius = visionRadius;
 	}
 	
 	private ArrayList<Location> getRelativeLocations(int offset, int radius, boolean halfRadius) {
@@ -224,7 +225,7 @@ public class LocationUtilities {
 		//Location relativeLocationOfExternalEntity = new Location(locationOfExternalEntity.x - myLocation.x, locationOfExternalEntity.y - myLocation.y);
 		
 		//Get correspondance matrix for my entity
-		ArrayList<LocationCorrespondance> correspondance = getPerceivableRelativeLocationsAsAbsoluteLocations(myLocation, myDirection, RADIUS, false);	//Use whole radius
+		ArrayList<LocationCorrespondance> correspondance = getPerceivableRelativeLocationsAsAbsoluteLocations(myLocation, myDirection, radius, false);	//Use whole radius
 		Location result = null;
 		for (LocationCorrespondance loc : correspondance) {
 			if (locationOfExternalEntity.x == loc.getAbsoluteLocation().x && locationOfExternalEntity.y == loc.getAbsoluteLocation().y) {
@@ -270,7 +271,7 @@ public class LocationUtilities {
 	 * @param body
 	 * @return
 	 */
-	public ArrayList<ExternalPerceptionInterface> getEntitiesForExternalPerception(Body body) {
+	public ArrayList<ExternalPerceptionInterface> getEntitiesForExternalPerception(Body body, boolean halfRadius) {
 		ArrayList<ExternalPerceptionInterface> result = new ArrayList<ExternalPerceptionInterface>();
 		
 		Location myLocation = body.getOwnerEntity().getLocation();
@@ -280,7 +281,7 @@ public class LocationUtilities {
 		double myDirection = body.getOwnerEntity().getDirection();
 		
 		//Get perceiveable locations as absolute coordinates
-		ArrayList<LocationCorrespondance> absolutePerceivableLocations = this.getPerceivableRelativeLocationsAsAbsoluteLocations(myLocation, myDirection, RADIUS, true);
+		ArrayList<LocationCorrespondance> absolutePerceivableLocations = this.getPerceivableRelativeLocationsAsAbsoluteLocations(myLocation, myDirection, radius, halfRadius);
 		
 		for (LocationCorrespondance loc : absolutePerceivableLocations) {
 			//Get all entities on that location
@@ -307,8 +308,8 @@ public class LocationUtilities {
 		final String noneSting = "NONE";
 		
 		//For all fields x and y
-		for (int x=-RADIUS; x<=RADIUS; x++) {
-			for (int y=0; y<=RADIUS; y++) {
+		for (int x=-radius; x<=radius; x++) {
+			for (int y=0; y<=radius; y++) {
 				String fieldResult = "";
 				
 				//Get all object with position (x, y)

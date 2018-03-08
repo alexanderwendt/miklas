@@ -30,6 +30,8 @@ import event.EventVariables;
 public class Body implements BodyInterface, BodyMindInterface {
 	protected static final Logger log = LoggerFactory.getLogger(Body.class);
 	
+	private static final String VISIONTYPEFULL = "full";
+	private static final String VISIONTYPEHALF = "half";
 	//protected static final Logger logstate = MyLogger.getLog("Agentstate"); 
 	
 	private final String moBodyTypeName;
@@ -54,22 +56,35 @@ public class Body implements BodyInterface, BodyMindInterface {
 	private final String MAXHEALTHNAME = "MAXHEALTH";
 	private final String ISACTIONEXECUTABLE = "ISACTIONEXECUTABLE";
 	
+	private final int visionRadius;
+	private final String visionType;
+	
 	private AnimateMindInterface generalMind=null;
 	
 	private int previousHealth;
 	private String currentAction = "NONE";
 	
-	public Body(String poBodyType, List<String> parentBodyTypeNames, Entity poOwnerEntity, EventHandlerInterface poEventHandlerForActions, EventHandlerInterface poEventHandlerForReactions, EventHandlerInterface eventHandlerForMyActionExecutions, EventHandlerInterface eventHandlerForBodyInternals) throws Exception {
-		moBodyTypeName = poBodyType;
+	public Body(String poBodyType, int visionRadius, String visionType, List<String> parentBodyTypeNames, Entity poOwnerEntity, EventHandlerInterface poEventHandlerForActions, EventHandlerInterface poEventHandlerForReactions, EventHandlerInterface eventHandlerForMyActionExecutions, EventHandlerInterface eventHandlerForBodyInternals) throws Exception {
+		this.moBodyTypeName = poBodyType;
 		this.parentBodyNames.addAll(parentBodyTypeNames);
-		moOwnerEntity = poOwnerEntity;
+		this.moOwnerEntity = poOwnerEntity;
+		this.visionRadius = visionRadius;
+		
+		if (visionType==null || visionType.equals(VISIONTYPEFULL)==false && visionType.equals(VISIONTYPEHALF)==false) {
+			//Set default value half
+			this.visionType = VISIONTYPEHALF;
+		} else {
+			this.visionType = visionType;
+		}
+		
+		
 		
 		//Create a new interaction
 		this.interactionEngine = new BodyInteractionEngine();
 		this.interactionEngine.init(this);
 		
 		//Set dependencies to location utils
-		this.locationUtils = new LocationUtilities(this.interactionEngine);
+		this.locationUtils = new LocationUtilities(this.interactionEngine, this.visionRadius);
 		
 		//Eventhandlers
 		this.eventHandlerForActions = poEventHandlerForActions;
@@ -317,7 +332,12 @@ public class Body implements BodyInterface, BodyMindInterface {
 	
 	public ArrayList<ExternalPerceptionInterface> getPerception() {
 		//Get all entities and their positions with relative positions
-		ArrayList<ExternalPerceptionInterface> result = locationUtils.getEntitiesForExternalPerception(this);
+		boolean visionTypeHalf =true;
+		if (this.visionType.equals(VISIONTYPEFULL)) {
+			visionTypeHalf = false;
+		} 
+		
+		ArrayList<ExternalPerceptionInterface> result = locationUtils.getEntitiesForExternalPerception(this, visionTypeHalf);
 		
 		return result;
 		

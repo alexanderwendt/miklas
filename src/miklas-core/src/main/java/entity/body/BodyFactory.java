@@ -72,7 +72,7 @@ public class BodyFactory {
 		
 		//if (bodyType.equals(EBodyType.ANIMATEBODY)==true) {
 			//Create body
-			Body animateBody = new Body(bodyTypeConfig.getBodyTypeName(), bodyTypeConfig.getParentBodyType(), ownerEntity, eventHandlerForActions, eventHandlerForReactions, eventHandlerForMyActionExecutions, eventHandlerForBodyInternals);
+			Body animateBody = new Body(bodyTypeConfig.getBodyTypeName(), bodyTypeConfig.getVisionRadius(), bodyTypeConfig.isVisionType(), bodyTypeConfig.getParentBodyType(), ownerEntity, eventHandlerForActions, eventHandlerForReactions, eventHandlerForMyActionExecutions, eventHandlerForBodyInternals);
 			
 			if (bodyTypeConfig.getMind()!=null) {
 				//Create mind
