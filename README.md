@@ -3,6 +3,28 @@ Miklas
 Miklas is a pacman based game, which is also used as a simulator in the area of artificial intelligence. The game is entirely programmable through a configuration file. The game can be used to create simple simulations, but also to make funny games for birthday parties.
 
 
+The Game
+====================================================
+As the game is started with a user inteface, the user can start a game, open the current active configuration file or quit the game.
+
+<img src="doc/01_Images/menu.jpg" width="500">
+
+When the game starts, it looks like the following. It shows the default game
+
+<img src="doc/01_Images/default_game_screen.jpg.jpg" width="700">
+
+The following commands are available for the human player
+- NONE no action
+- MOVE_FORWARD: ARROW-UP, move a step formar
+- MOVE_BACKWARD: ARROW-DOWN, move a step backwards
+- TURN_LEFT: ARROW-LEFT, turn 90° left (45° is also possible if set in the configuration)
+- TURN_RIGHT: ARROW-RIGHT, turn 90° right
+- EAT: E, eat
+- ATTACK: A, bite or attack something
+- PUSH: P, push an object
+- PULL: O, pull an object with you
+
+Thanks to R. Schneeberger for his contributions to the user interface.
 
 Repository
 ==================================================== 
@@ -45,21 +67,21 @@ In the example, the path is set to “conf/ariverp2.ini”
 
 The world is created with layers. “_” means nothing. All other letters are assigned to certain “actors” in the world. For instance, the letter “w” in the map is here a piece of forest.
 
-<img src="doc/01_Images/conf1.png" width="300">
+<img src="doc/01_Images/conf1.png" width="500">
 
 Each actor has a bodytypename. The bodytype defines the body of the actor.
 
-<img src="doc/01_Images/conf2.png" width="300">
+<img src="doc/01_Images/conf2.png" width="500">
 
 In the case above, only internal events are associated with the body. An example is the “SETHEALTH”. The event is invoked from a class in the “classname”. If an event is activated it performs some action on the body.
 
-<img src="doc/01_Images/conf3.png" width="300">
+<img src="doc/01_Images/conf3.png" width="500">
 
 Only if a condition is satisfied, the event will execute. Conditions are defined as own invoked classes.
 
-<img src="doc/01_Images/conf4.png" width="300">
+<img src="doc/01_Images/conf4.png" width="500">
 
-<img src="doc/01_Images/conf5.png" width="300">
+<img src="doc/01_Images/conf5.png" width="500">
 
 Miklas Documentation
 ====================================================
