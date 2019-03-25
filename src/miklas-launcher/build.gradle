@@ -12,8 +12,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 group = 'miklas'
-sourceCompatibility = 1.8	//Java version
-targetCompatibility = 1.8
+//sourceCompatibility = 1.8	//Java version
+//targetCompatibility = 1.8
 version = '1.0.0'
 
 // In this section you declare where to find the dependencies of your project

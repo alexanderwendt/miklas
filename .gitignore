@@ -31,3 +31,17 @@ hs_err_pid*
 /src/miklas-launcher/.classpath
 /src/miklas-launcher/.project
 /src/miklas-launcher/gradlew
+/src/miklas-core/*.classpath
+/src/miklas-core/gradle
+/src/miklas-events/.settings
+/src/miklas-events/gradle
+/src/miklas-events/gradlew.bat
+/src/miklas-events/.classpath
+/src/miklas-events/.project
+/src/miklas-events/gradlew
+/src/miklas-externalminds/gradlew.bat
+/src/miklas-externalminds/.settings
+/src/miklas-externalminds/gradle
+/src/miklas-externalminds/.classpath
+/src/miklas-externalminds/.project
+/src/miklas-externalminds/gradlew
