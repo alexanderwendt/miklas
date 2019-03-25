@@ -7,11 +7,11 @@ The Game
 ====================================================
 As the game is started with a user inteface, the user can start a game, open the current active configuration file or quit the game.
 
-<img src="doc/01_Images/menu.jpg" width="500">
+<img src="doc/01_Images/menu.jpg" width="300">
 
 When the game starts, it looks like the following. It shows the default game
 
-<img src="doc/01_Images/default_game_screen.jpg.jpg" width="700">
+<img src="doc/01_Images/default_game_screen.jpg" width="700">
 
 The following commands are available for the human player
 - NONE no action
