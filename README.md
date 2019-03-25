@@ -1,4 +1,5 @@
 # Miklas
+==================================================== 
 Miklas is a pacman based game, which is also used as a simulator in the area of artificial intelligence. The game is entirely programmable through a configuration file. The game can be used to create simple simulations, but also to make funny games for birthday parties.
 
 ## Installation
